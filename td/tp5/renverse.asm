@@ -1,5 +1,11 @@
 .ORIG x3000 ;remarque: la pile ne descend pas mais monte.
-Main    LEA R1 arr
+Main    JSR reverse
+        HALT
+
+;sous-routine
+
+;fonction renversant la chaîne de caractère arr
+reverse LEA R1 arr
         JSR strlen
         AND R1 R1 #0 ;première moitié du tableau
         AND R2 R2 #0 ;première moitié négative du tableau
@@ -14,8 +20,9 @@ loop    ADD R3 R0 R2
         ADD R2 R2 #-1
         ADD R1 R1 #1
         BR loop
-end     HALT
+end     RET
 
+;fonction qui renvoie la longueur d'une chaîne de caractère
 strlen  ADD R6 R6 #1
         STR R7 R6 #0
         LDR R0 R1 #0
@@ -51,6 +58,6 @@ swap    ADD R6 R6 #1 ;ajout des deux adresses dans la pile
         ADD R6 R6 #-3
         RET
 
-arr .STRINGZ "abababccccdedede"
 ; autres constantes ou données statiques
+arr .STRINGZ "abababccccdedede"
 .END
